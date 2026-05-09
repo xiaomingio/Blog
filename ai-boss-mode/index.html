@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-16.png">
+  <link rel="mask-icon" href="/images/logo-128.png" color="#222">
+  <meta name="baidu-site-verification" content="codeva-Y0efqOZAOA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiaoming.io","root":"/","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="自从 AI 大模型出来以后，很多事情，尤其是执行层面的事情，都可以交给 AI 搞定。对做项目的程序员来说，大部分工作和难点，也就集中到了产品设计和任务分配上。 原先程序员是执行者，现在像是升职成了“领导”。但当领导，也没有那么好当。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程序员的新工作：管理一群偷懒的 AI 员工">
+<meta property="og:url" content="https://www.xiaoming.io/ai-boss-mode/">
+<meta property="og:site_name" content="搬砖的小明">
+<meta property="og:description" content="自从 AI 大模型出来以后，很多事情，尤其是执行层面的事情，都可以交给 AI 搞定。对做项目的程序员来说，大部分工作和难点，也就集中到了产品设计和任务分配上。 原先程序员是执行者，现在像是升职成了“领导”。但当领导，也没有那么好当。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xiaoming.io/ai-boss-mode/images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777464688780.webp">
+<meta property="og:image" content="https://www.xiaoming.io/ai-boss-mode/images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1778317174404.webp">
+<meta property="og:image" content="https://www.xiaoming.io/ai-boss-mode/images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1778318515095.webp">
+<meta property="og:image" content="https://www.xiaoming.io/ai-boss-mode/images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777482438373.webp">
+<meta property="og:image" content="https://www.xiaoming.io/ai-boss-mode/images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777464135136.webp">
+<meta property="og:image" content="https://www.xiaoming.io/ai-boss-mode/images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777464612299.webp">
+<meta property="og:image" content="https://www.xiaoming.io/ai-boss-mode/images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777467793080.webp">
+<meta property="og:image" content="https://www.xiaoming.io/ai-boss-mode/images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777468025149.webp">
+<meta property="article:published_time" content="2026-05-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-09T10:15:02.296Z">
+<meta property="article:author" content="小明">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="工作流">
+<meta property="article:tag" content="文档驱动开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.xiaoming.io/ai-boss-mode/images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777464688780.webp">
+
+<link rel="canonical" href="https://www.xiaoming.io/ai-boss-mode/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>程序员的新工作：管理一群偷懒的 AI 员工 | 搬砖的小明</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?01cb9081555fb604776b223fe01db45d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">搬砖的小明</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">305</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">175</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "程序员的新工作：管理一群偷懒的 AI 员工",
+      "description": "自从 AI 大模型出来以后，很多事情，尤其是执行层面的事情，都可以交给 AI 搞定。对做项目的程序员来说，大部分工作和难点，也就集中到了产品设计和任务分配上。 原先程序员是执行者，现在像是升职成了“领导”。但当领导，也没有那么好当。",
+      "datePublished": "2026-05-08T16:00:00.000Z",
+      "dateModified": "2026-05-09T10:15:02.296Z",
+      "author": {
+        "@type": "Person",
+        "name": "小明"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "搬砖的小明",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "/images/logo-32.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.xiaoming.io/ai-boss-mode/"
+      }
+    }
+    </script>
+    <link itemprop="mainEntityOfPage" href="https://www.xiaoming.io/ai-boss-mode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="小明">
+      <meta itemprop="description" content="90后理工男，前美团/微软程序员。记录生活、财富、技术与思考，用理工思维持续迭代对世界的理解。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="搬砖的小明">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          程序员的新工作：管理一群偷懒的 AI 员工
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2026-05-09 00:00:00" itemprop="dateCreated datePublished" datetime="2026-05-09T00:00:00+08:00">2026-05-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/develop/" itemprop="url" rel="index"><span itemprop="name">开发技术</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/ai-boss-mode/" class="post-meta-item leancloud_visitors" data-flag-title="程序员的新工作：管理一群偷懒的 AI 员工" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/ai-boss-mode/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/ai-boss-mode/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>自从 AI 大模型出来以后，很多事情，尤其是执行层面的事情，都可以交给 AI 搞定。对做项目的程序员来说，大部分工作和难点，也就集中到了产品设计和任务分配上。</p>
+<p>原先程序员是执行者，现在像是升职成了“领导”。但当领导，也没有那么好当。</p>
+<h2 id="头脑风暴，会议记录">头脑风暴，会议记录</h2>
+<p>前期我会先和 AI 聊天，把自己对某个产品的想法一点点聊出来，让 AI 帮我逐渐细化。在 superpowers 工作流里，这个步骤叫 Brain Storm，也就是头脑风暴。</p>
+<p>聊完初步想法以后，我会让 AI 帮我做一些调研，再把调研结果保存到单独的 reference 文件夹里。</p>
+<p>接着根据聊天内容和调研内容，让 AI 帮我生成 PRD，也就是对一个产品的粗略功能描述。</p>
+<p>头脑风暴的过程，可以直接在 Agent 工具里聊，也可以直接用常规的聊天工具。实际上我更推荐后者。</p>
+<p>在 ChatGPT 里创建项目以后，每次聊同一个产品，都会在这个项目里进行。每次新起一个话题时，它都可以读到整个项目里的其他历史聊天记录，这样我就不需要每次重复介绍这个项目的背景。</p>
+<p>这有点像每次我跟它开会，它都会把会议内容记录下来，下次就不需要我重复说上次的内容了。</p>
+<p>由于头脑风暴的过程中，思维往往比较跳跃、混乱，而且可能会反复纠结、修改设计，<strong>如果想每一次聊天都把结论及时整理成文档，会比较花精力</strong>。所以，AI 如果能<strong>直接读取所有历史聊天记录作为上下文</strong>，我觉得是更好的选择。</p>
+<p>还有一个原因，这些聊天软件可以免费使用，也能节省一点 Token 成本。ChatGPT 也可以结合 VSCode 或 Cursor 读写单个文件，详见下面截图示例。</p>
+<p><img data-src="./images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777464688780.webp" alt=""></p>
+<h2 id="项目细化，需求评审">项目细化，需求评审</h2>
+<p>有了 PRD 以后，我开始细化文档。一般我会写这样几类文档。</p>
+<p>PRD：描述 Why / What，也就是为什么做、做什么。</p>
+<p>Spec：描述 How it works，也就是系统如何工作，主要是更详细的功能细节描述。</p>
+<p>Plan：描述 How to build，也就是如何落地实现。比如用什么技术框架、有哪些数据库表、API 接口等等。</p>
+<p>Prototype：也就是原型图。让 AI 用 HTML 生成产品原型图，对每个功能模块做大概的示意展示。主要作用是帮我自己<strong>理清思路，更直观地做产品细节决策</strong>。</p>
+<p>下图展示了我的一个实际项目的文档结构。我没有直接用目前比较火的 superpowers + openspec 来做，而是借鉴它们的思路，自己从头探索、踩坑，做一套自己的文档管理模式。</p>
+<p>虽然这样可能会走一些弯路，但我觉得<strong>会让我对 AI 如何写代码有更深的理解</strong>。</p>
+<p><img data-src="./images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1778317174404.webp" alt=""></p>
+<h2 id="和-AI-员工一对一聊天">和 AI 员工一对一聊天</h2>
+<p>在整个项目开发过程中，最费时间的就是写 Spec 和 Plan。</p>
+<p>前期经常要反复修改设计、补细节，里面也会有很多一开始考虑不到的问题。再加上设计一改，其他文件没有同步修改，就容易互相冲突，所以这些文档在初期往往会很乱。</p>
+<p>一开始的工作流程是，我和 AI 聊天，让它帮我找问题。找到问题以后，我再告诉它怎么改，它再去修改。改完以后再继续找问题，就这样一直循环。</p>
+<p>聊了一段时间以后，我感觉效率很低。而且它每次都还能继续找出新问题，像是永远没有尽头。再加上经常因为沟通不畅改错，还得让它重新改。</p>
+<p>这个工作模式显然不对。虽然是 AI 在帮我找问题，也是 AI 在帮我修改，可我还是得一直盯着它、一直回答它的问题。作为老板，我完全没有被解放出来。</p>
+<h2 id="员工给我做汇报，我来批阅">员工给我做汇报，我来批阅</h2>
+<p>探索了一段时间以后，我换了个思路。</p>
+<p>我会先让 AI 找出一批 Open Issue，保存到 Open Issue 文件里，列成表格，再给出建议修复方式。</p>
+<p>然后我会人工去看这个表格。如果我觉得它给的修复建议合理，就直接不管。如果我觉得建议有问题，就手动改这个单元格。很多时候，AI 会给出两种解决方法，我就删掉其中一种，只保留我觉得更合适的那一种。</p>
+<p>等我把整个表格都过完一遍，就会新开一个会话，让它按照表格里的内容修复所有 Open Issue。等它修完以后，我再去看一下 Git Diff，确认它的修改基本符合我的预期。</p>
+<p>如此不断循环。</p>
+<p>每当 AI 去找 Open Issue 或者修复问题的时候，我没什么事可干，刚好可以去看看电视。</p>
+<p>老板没有精力一直盯着员工干活，所以我的工作模式也变了。我让 AI 员工自己去干，隔一段时间再跟它一起开个会。开会之前，它要先把所有问题都总结起来，一次性汇报给我，我再一次性批阅，交给它继续干。</p>
+<h2 id="发现员工在偷懒">发现员工在偷懒</h2>
+<p>但这样干了一段时间以后，我还是觉得效率不高。因为每次我让 AI 去找问题，它都能找出几个问题，但不会一次性把所有能找到的问题都告诉我，我还是得经常和它“开会”，讨论每个问题到底要怎么改。</p>
+<p>从这里就能看出来，<strong>AI 是个比较偷懒的员工</strong>。如果你只是让它找问题，它可能默认找 5 个问题就结束了。下次你再让它继续找，它又再找 5 个，然后又结束，不能一直往下找。</p>
+<p>后来我试了个办法。我说你一次性给我找至少 20 个问题出来，结果 AI 真的就刚好给我找了 20 个问题。修完这 20 个问题以后，我又说，这次你直接给我找 100 个问题出来，它也真的找出来了 100 个。</p>
+<p>关键是，我这个文档里确实有很多细节没有考虑清楚，这 100 个问题也确实存在，并不是它瞎编的。</p>
+<h2 id="给员工制定-KPI">给员工制定 KPI</h2>
+<p>但前面这样还是会无穷无尽。我怎么知道文档里到底还有多少问题，怎么尽可能让它一次性把问题找全呢？</p>
+<p>和 AI 讨论之后，我有了更清晰的方向。</p>
+<p>先明确找问题的目标是什么。我的目标其实很简单，就是先把第一版跑通，不去管太细的细节。</p>
+<p>我决定把这个目标直接写进一个 skill 里，让它每次自动调用 skill 去找 Open Issue。这样它就会明确知道，我的目标是尽可能快地实现核心功能。</p>
+<p><img data-src="./images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1778318515095.webp" alt=""></p>
+<h2 id="当上大老板">当上大老板</h2>
+<p>制定完 KPI 以后，我需要让 AI 朝着这个 KPI 努力。</p>
+<p>但前面说了，这个 AI 很偷懒。用通俗的话说，就像驴子推石磨一样，推一圈，转一圈。</p>
+<p>于是我借鉴了网上提到的思路，可以通过循环调用 AI，让它反复做同一件事，直到全部做完为止。实际上这个思路也有现成项目，比如 Ralph。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/snarktank/ralph">https://github.com/snarktank/ralph</a></p>
+<p>考虑到我的项目场景和别人的不太一样，所以我还是为自己的项目量身定制了一个 skill，而不是直接套别人的东西。</p>
+<p>我让 AI 自己创建子 Agent，再让子 Agent 去找问题，找完以后汇报给主 Agent。如果某个子 Agent 这一轮还能找出新问题，就继续循环，让它再找一遍。如果某一轮已经找不出新问题了，就停止流程。</p>
+<p>最后我给这个流程设计了三种工作模式。</p>
+<p>1、普通模式：直接找问题，写入 OPEN_ISSUE 文档。</p>
+<p>2、并行模式：开多个子 Agent 同时找问题。比较适合初期问题很多的时候，可以让多个子 Agent 在不同文件里分别找问题，最后再由主 Agent 把所有问题合并到一起，提高效率。</p>
+<p>3、全量模式：循环找问题，直到找不到为止。适合后期文档已经相对完善的时候，让它反复循环，直到找不出问题为止。</p>
+<p>还有一个细节，就是允许子 Agent 长时间运行。一开始没有这个细节，我发现主 Agent 等了一会之后，就会认为子 Agent 耗时超出预期，直接把它终止掉。</p>
+<p><img data-src="./images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777482438373.webp" alt=""></p>
+<p>我实际这么跑了一下，发现确实很管用。还有个很有意思的细节，它运行了一段时间以后，发现子 Agent 还没返回，也没及时更新文档，于是主动给子 Agent 发了一条催办消息，让它尽快。</p>
+<p>这让我感觉自己这次是真的当上了大老板，不仅手底下有员工，还有员工<strong>帮我鞭打更底层的“牛马”干活</strong>。</p>
+<p><img data-src="./images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777464135136.webp" alt=""></p>
+<p>最后它跑了两轮检查以后，就没有发现新问题了。这说明文档已经相对完善了，这时候我就需要去批阅一下，再让它帮我修复。</p>
+<p>修复以后，还可以让它再做下一轮查找，因为修复过程本身也可能动到一些设计，有可能引入新的问题。</p>
+<p>这样循环下去，直到最后已经没有太多问题要修复了，就说明文档真的进入了可以落地实现的阶段。</p>
+<p><img data-src="./images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777464612299.webp" alt=""></p>
+<h2 id="功能实现，拆分任务">功能实现，拆分任务</h2>
+<p>文档搞定之后，就是代码实现。</p>
+<p>整个项目的完整实现是比较复杂的，最基层的人类程序员很难独立实现一个完整项目，甚至也很难独立实现一个足够复杂的功能模块。</p>
+<p>而作为老板，一个很重要的事情，就是把一个复杂任务拆分成很多小块，每一块分批交给同一个员工完成，或者分别交给不同的员工完成，给他们设定每个小任务的目标。</p>
+<p>AI 员工和人类员工很类似。</p>
+<ol>
+<li>AI 员工容易偷懒。如果你直接把所有文档全丢给它去实现，它可能会实现出很多缺失。</li>
+<li>每一个 Agent 只做一个相对小的 Task，它的上下文比较简单，这样反而更容易可靠地完成任务，Token 消耗也会少。</li>
+<li>多个 AI 员工一起同时推进，效率会更高。当然，Token 消耗也会集中在这段时间。</li>
+</ol>
+<p>所以要把项目拆分成不同的功能模块，并且提前确定好每一个功能模块的文件边界。简单说，就是放在哪些文件夹里。</p>
+<p>每一个模块对应一个 Task，把 Task 的拆分结果写到文档里。</p>
+<h2 id="扩大团队，分工协作">扩大团队，分工协作</h2>
+<p>为了避免多个 Agent 同时开发、写文件导致冲突，一个最直接的思路就是确定每一个 Agent 要写哪些文件，把它们尽量按文件夹分割开来。</p>
+<p>另一个思路是利用 Git Worktree，让它们同时在不同的 Git 分支做开发，最后按顺序提交。但即使这样做，也应该尽量避免多个 Agent 大量修改同一个文件，避免冲突。</p>
+<p>思路还是和前面写文档类似，让一个主 Agent 负责任务的拆分、分发、进度监督，让其他 Agent 负责实施。</p>
+<p>当然，如果你喜欢折腾，还可以用更复杂的 Agent 层级。例如一级主管 Agent 负责整个项目的调度，二级中层管理 Agent 负责每个功能模块，底下的牛马 Agent 负责代码实现。</p>
+<p>但由于 Codex 只能一个主 Agent 和多个子 Agent，不能有更深的 Agent 层级了，我觉得也没有必要去折腾。</p>
+<h2 id="及时反馈（Harness）">及时反馈（Harness）</h2>
+<p>人类员工在工作过程中，领导需要经常跟他们沟通交流，和他们一起回顾近期工作做得怎么样，让员工得到及时反馈，从而调整自己的工作。</p>
+<p>而 Harness 编程思想，和这一点很类似。它最核心的思想，就是要给 AI 的工作建立反馈机制，也就是让 AI 自己知道自己有没有做完、有没有做对任务。</p>
+<p>具体实现上，就是通过测试，让 AI 知道自己做得对不对。如果不对，就自己尝试修复，修复完了再运行测试，直到成功为止。</p>
+<p>对于纯逻辑或者后端这种项目，AI 直接调接口就知道返回结果对不对。</p>
+<p>对于有 UI 界面的项目，无论是移动端、桌面端还是网页端，不同的平台都有自己的接口，可以让 AI 操作界面，还可以通过自主截图并分析图像内容，判断界面有没有正常工作。</p>
+<h2 id="工作验收">工作验收</h2>
+<p>理想情况下，应该是一次性把文档全写好，然后代码一次性生成出来，一切都很完美。</p>
+<p>但现实情况是，你不可能真的把文档写得无懈可击。等实现出来以后，又会发现设计上可能有各种考虑不全、细节不具体，或者 AI 并没有完美按照你的设想执行。</p>
+<p>我目前有个项目，花了整整两周时间细化和完善文档。</p>
+<p>第一版代码实现确实比较快，只花了几天时间，但还不能做到 AI 一次性全部完成。这几天里，我还是需要自己去看代码，再让 AI 修改完善。但总的来说，这已经效率很高了。</p>
+<h2 id="版本迭代">版本迭代</h2>
+<p>第一版只是用最简单的方式粗略实现了我的设想，整个系统的框架都有了，并且能初步运行。</p>
+<p>后面我又开始了新一版的迭代。</p>
+<p>这一版迭代里，我开始用上了 Codex 的 Goal 功能。下一篇文章我会介绍具体的使用方式和经验心得。</p>
+<h2 id="你不干，有的是-AI-愿意干">你不干，有的是 AI 愿意干</h2>
+<p>最后我让 AI 帮我生成了这样一张图，当作文章封面图。我本来想用“鞭打牛马”这种黑色幽默做隐喻，但有些 AI 拒绝生成这张图，说它涉及暴力。</p>
+<p>不过没关系，<strong>你不干，有的是 AI 愿意干</strong>。我换了一个 AI，一下就给我生成出来了。</p>
+<p><img data-src="./images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777467793080.webp" alt=""></p>
+<p><img data-src="./images/%E7%94%A8AI%E4%BD%93%E9%AA%8C%E5%BD%93%E8%80%81%E6%9D%BF%E7%9A%84%E5%BF%AB%E4%B9%90-1777468025149.webp" alt=""></p>
+
+            
+
+<p>如果觉得文章有帮助，欢迎分享转发，也欢迎关注我的公众号“搬砖的小明”，及时获取更新</p>
+<p style="text-align: center;">
+<img src="/about/wechat-qrcode.jpg" alt="公众号：搬砖的小明">
+</p>
+
+
+    </div>
+
+    
+    
+    
+      
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Agent/" rel="tag"># Agent</a>
+              <a href="/tags/%E6%96%87%E6%A1%A3%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="tag"># 文档驱动开发</a>
+              <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" rel="tag"># 工作流</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/claude-cowork-deepseek/" rel="prev" title="不用官方号，Claude Cowork 用国产模型就能做PPT写文章">
+      <i class="fa fa-chevron-left"></i> 不用官方号，Claude Cowork 用国产模型就能做PPT写文章
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%B4%E8%84%91%E9%A3%8E%E6%9A%B4%EF%BC%8C%E4%BC%9A%E8%AE%AE%E8%AE%B0%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">头脑风暴，会议记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%86%E5%8C%96%EF%BC%8C%E9%9C%80%E6%B1%82%E8%AF%84%E5%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">项目细化，需求评审</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%92%8C-AI-%E5%91%98%E5%B7%A5%E4%B8%80%E5%AF%B9%E4%B8%80%E8%81%8A%E5%A4%A9"><span class="nav-number">3.</span> <span class="nav-text">和 AI 员工一对一聊天</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%98%E5%B7%A5%E7%BB%99%E6%88%91%E5%81%9A%E6%B1%87%E6%8A%A5%EF%BC%8C%E6%88%91%E6%9D%A5%E6%89%B9%E9%98%85"><span class="nav-number">4.</span> <span class="nav-text">员工给我做汇报，我来批阅</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E7%8E%B0%E5%91%98%E5%B7%A5%E5%9C%A8%E5%81%B7%E6%87%92"><span class="nav-number">5.</span> <span class="nav-text">发现员工在偷懒</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E5%91%98%E5%B7%A5%E5%88%B6%E5%AE%9A-KPI"><span class="nav-number">6.</span> <span class="nav-text">给员工制定 KPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93%E4%B8%8A%E5%A4%A7%E8%80%81%E6%9D%BF"><span class="nav-number">7.</span> <span class="nav-text">当上大老板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0%EF%BC%8C%E6%8B%86%E5%88%86%E4%BB%BB%E5%8A%A1"><span class="nav-number">8.</span> <span class="nav-text">功能实现，拆分任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%A4%A7%E5%9B%A2%E9%98%9F%EF%BC%8C%E5%88%86%E5%B7%A5%E5%8D%8F%E4%BD%9C"><span class="nav-number">9.</span> <span class="nav-text">扩大团队，分工协作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8A%E6%97%B6%E5%8F%8D%E9%A6%88%EF%BC%88Harness%EF%BC%89"><span class="nav-number">10.</span> <span class="nav-text">及时反馈（Harness）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E9%AA%8C%E6%94%B6"><span class="nav-number">11.</span> <span class="nav-text">工作验收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E8%BF%AD%E4%BB%A3"><span class="nav-number">12.</span> <span class="nav-text">版本迭代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%A0%E4%B8%8D%E5%B9%B2%EF%BC%8C%E6%9C%89%E7%9A%84%E6%98%AF-AI-%E6%84%BF%E6%84%8F%E5%B9%B2"><span class="nav-number">13.</span> <span class="nav-text">你不干，有的是 AI 愿意干</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview motion-element">
+  <h3 class="site-overview-title">小明的个人博客</h3>
+  <p class="site-description">90后理工男，前美团/微软程序员。记录生活、财富、技术与思考，用理工思维持续迭代对世界的理解。</p>
+  <div class="site-wechat-qrcode" style="text-align: center; margin-top: 15px;">
+    <p style="margin: 0; font-size: 13px; color: #999;">微信公众号</p>
+    <img src="/about/wechat-qrcode.jpg" alt="微信公众号二维码" style="width: 120px; height: 120px; max-width: 100%;">
+  </div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">305</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">175</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jzj1993" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jzj1993" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www.dappchaser.com/" title="http:&#x2F;&#x2F;www.dappchaser.com" rel="noopener" target="_blank">DAppChaser</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chenwenguan.com/" title="https:&#x2F;&#x2F;www.chenwenguan.com&#x2F;" rel="noopener" target="_blank">陈文管的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://yifeiyuan.me/" title="http:&#x2F;&#x2F;yifeiyuan.me&#x2F;" rel="noopener" target="_blank">程序亦非猿</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.trinea.cn/" title="https:&#x2F;&#x2F;www.trinea.cn&#x2F;" rel="noopener" target="_blank">Trinea</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.weshinekx.cn/" title="https:&#x2F;&#x2F;blog.weshinekx.cn&#x2F;" rel="noopener" target="_blank">Shinya</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小明</span>
+</div>
+  <div class="sitemap"><a href="/sitemap.xml" class="theme-link">站点地图</a>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.undefined</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : '3YlzwEecQlMdJPH9KEbFt6PX-gzGzoHsz',
+      appKey     : 'raIB2P7DewB4SAboVtpHakbh',
+      placeholder: "输入评论...",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '20' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
