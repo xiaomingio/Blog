@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-16.png">
+  <link rel="mask-icon" href="/images/logo-128.png" color="#222">
+  <meta name="baidu-site-verification" content="codeva-Y0efqOZAOA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiaoming.io","root":"/","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="之前的文章，我分享了最近用 AI 做项目的一些心得。我觉得程序员用 AI 做项目，就像在管理一群会偷懒的 AI 员工。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我用 Codex Goal 模式连续跑了 13 小时，聊聊真实体验">
+<meta property="og:url" content="https://www.xiaoming.io/codex-goal-mode/">
+<meta property="og:site_name" content="搬砖的小明">
+<meta property="og:description" content="之前的文章，我分享了最近用 AI 做项目的一些心得。我觉得程序员用 AI 做项目，就像在管理一群会偷懒的 AI 员工。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xiaoming.io/codex-goal-mode/images/Codex%20goal%E6%A8%A1%E5%BC%8F-cover-1778573414.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-goal-mode/images/Codex%20goal%E6%A8%A1%E5%BC%8F-1778564881808.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-goal-mode/images/Codex%20goal%E6%A8%A1%E5%BC%8F-1778565583530.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-goal-mode/images/Codex%20goal%E6%A8%A1%E5%BC%8F-1778567482567.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-goal-mode/images/Codex%20goal%E6%A8%A1%E5%BC%8F-1778569973496.webp">
+<meta property="article:published_time" content="2026-05-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-13T09:38:03.442Z">
+<meta property="article:author" content="小明">
+<meta property="article:tag" content="AI编程">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="Codex">
+<meta property="article:tag" content="Goal模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.xiaoming.io/codex-goal-mode/images/Codex%20goal%E6%A8%A1%E5%BC%8F-cover-1778573414.webp">
+
+<link rel="canonical" href="https://www.xiaoming.io/codex-goal-mode/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>我用 Codex Goal 模式连续跑了 13 小时，聊聊真实体验 | 搬砖的小明</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?01cb9081555fb604776b223fe01db45d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">搬砖的小明</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">307</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">178</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "我用 Codex Goal 模式连续跑了 13 小时，聊聊真实体验",
+      "description": "之前的文章，我分享了最近用 AI 做项目的一些心得。我觉得程序员用 AI 做项目，就像在管理一群会偷懒的 AI 员工。",
+      "datePublished": "2026-05-11T16:00:00.000Z",
+      "dateModified": "2026-05-13T09:38:03.442Z",
+      "author": {
+        "@type": "Person",
+        "name": "小明"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "搬砖的小明",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "/images/logo-32.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.xiaoming.io/codex-goal-mode/"
+      }
+    }
+    </script>
+    <link itemprop="mainEntityOfPage" href="https://www.xiaoming.io/codex-goal-mode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="小明">
+      <meta itemprop="description" content="90后理工男，前美团/微软程序员。记录生活、财富、技术与思考，用理工思维持续迭代对世界的理解。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="搬砖的小明">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          我用 Codex Goal 模式连续跑了 13 小时，聊聊真实体验
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2026-05-12 00:00:00" itemprop="dateCreated datePublished" datetime="2026-05-12T00:00:00+08:00">2026-05-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/develop/" itemprop="url" rel="index"><span itemprop="name">开发技术</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/codex-goal-mode/" class="post-meta-item leancloud_visitors" data-flag-title="我用 Codex Goal 模式连续跑了 13 小时，聊聊真实体验" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/codex-goal-mode/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/codex-goal-mode/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img data-src="images/Codex%20goal%E6%A8%A1%E5%BC%8F-cover-1778573414.webp" alt=""></p>
+<p>之前的文章，我分享了最近用 AI 做项目的一些心得。我觉得程序员用 AI 做项目，就像在管理一群会偷懒的 AI 员工。</p>
+<p>过去几个月里，一个被讨论得比较多的问题是，如何让 AI 能独立自主地持续运行很长时间，而不用人工参与，每隔一会就给它发一句继续。</p>
+<p>目前比较常用的一个工具是 Raplph。它的原理是用 Shell 脚本循环调用 Codex 或者 Claude 这种 Agent。每当它退出以后，就再次调用。循环一定次数以后，把问题整个解决掉。</p>
+<p>不过近期 <strong>Codex 已经悄悄推出了自己的工具，也就是 Goal 模式</strong>。我已经成功用 Goal 模式运行过多次超过 10 小时的任务。有了 Goal 模式，那些第三方工具就不再需要了。</p>
+<p>下面介绍 Goal 模式的使用。</p>
+<h2 id="安装-Codex">安装 Codex</h2>
+<p>首先需要安装 Codex CLI 0.128.0 或以上版本。目前 Goal 模式只能在 CLI 里面运行，图形界面暂时不支持。</p>
+<p>建议在命令行中运行 <code>npm install -g @openai/codex@latest</code>，安装最新版的 Codex CLI。安装好后，如果你有官方账号，就直接登录官方账号。没有官方账号，也可以用 CC Switch 工具或直接修改配置文件的方式设置 API Key。</p>
+<h2 id="开启-Goal-模式">开启 Goal 模式</h2>
+<p>安装好后，打开 <code>~/.codex/config.toml</code> 文件，增加一段：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[features]</span></span><br><span class="line"><span class="attr">goals</span> = <span class="literal">true</span> <span class="comment"># 启用 goal 模式</span></span><br></pre></td></tr></table></figure>
+<p>然后启动 Codex，就可以使用 Goal 模式了。当你在命令行里输入 <code>/g</code>，如果可以看到下面有 goal 的候选项，说明已经正确打开。</p>
+<p><img data-src="./images/Codex%20goal%E6%A8%A1%E5%BC%8F-1778564881808.webp" alt=""></p>
+<h2 id="权限设置">权限设置</h2>
+<p>Codex 默认是在沙箱里运行的，所以会有很多权限限制。比如运行命令行需要用户 approve，比如访问网络有限制，比如不能启动 Playwright 浏览器环境。</p>
+<p>平时如果人一直在电脑前，运行命令时需要 approve，点一下就行。但 Goal 模式需要持续运行。如果你人不在电脑前，可能睡一觉醒来，发现它早早的就卡在了 approve 界面几乎什么都没干。所以这个问题一定要提前解决。</p>
+<p>最简单的方式，是直接运行下面的命令进入 YOLO 模式，这样就是最大权限。YOLO = You Only Look Once Mode，你只需要看一次，后面都可以让 Agent 自己跑。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codex --yolo</span><br></pre></td></tr></table></figure>
+<p>在界面里面也能看到 YOLO 模式已经打开。</p>
+<p><img data-src="./images/Codex%20goal%E6%A8%A1%E5%BC%8F-1778565583530.webp" alt=""></p>
+<p>如果你对 AI 比较放心，或者提前做好了安全措施，比如把 Codex 放在一台独立电脑上运行，或者放在 Docker 里运行，把项目做好备份，不担心它误删文件，那可以直接开 YOLO 模式。我实际上就是用的 YOLO 模式。</p>
+<p>如果你觉得这样太危险，也可以自己设置权限。打开 <code>~/.codex/config.toml</code> 文件，修改如下，如果 Codex 正在运行需要重启生效。这套配置可以满足大多数场景，但还是会有一些场景在这种设置下没法工作。</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sandbox_mode</span> = <span class="string">&quot;workspace-write&quot;</span> <span class="comment"># 允许在工作区内编辑，并在该边界内运行常规本地命令</span></span><br><span class="line"><span class="attr">approval_policy</span> = <span class="string">&quot;never&quot;</span> <span class="comment"># 不需要 approve，但对于超出权限的命令会被直接拒绝</span></span><br><span class="line"></span><br><span class="line"><span class="section">[sandbox_workspace_write]</span></span><br><span class="line"><span class="attr">network_access</span> = <span class="literal">true</span> <span class="comment"># 允许网络请求</span></span><br><span class="line"></span><br><span class="line"><span class="section">[tools.shell]</span></span><br><span class="line"><span class="attr">confirm_commands</span> = <span class="literal">false</span> <span class="comment"># 命令执行不需要确认</span></span><br></pre></td></tr></table></figure>
+<p>更详细的内容，可以参考官方文档。</p>
+<p><a target="_blank" rel="noopener" href="https://developers.openai.com/codex/agent-approvals-security">https://developers.openai.com/codex/agent-approvals-security</a><br>
+<a target="_blank" rel="noopener" href="https://developers.openai.com/codex/concepts/sandboxing">https://developers.openai.com/codex/concepts/sandboxing</a></p>
+<h2 id="设置-Goal-目标">设置 Goal 目标</h2>
+<p>最简单的场景下，你只要在 Codex 里输入 <code>/goal 你的目标</code>，就可以运行 Goal 模式，直到目标完成。</p>
+<p>但实际上，如果你只是用一句话来描述目标，它大概率会跑偏。要么自由发挥，做了很多和你设想不符的事，要么偷懒，变相完成了目标，但并不是你真正想要的结果。</p>
+<p>所以更推荐的做法，是写一个完整的 Markdown 文件来解释你的目标，比如就叫 <code>GOAL.md</code>。然后输入 <code>/goal 参考 GOAL.md</code>，它就会自己读这个文件，再去实现对应的目标。</p>
+<p>这个目标文件很关键。我推荐参考下面的结构去写。当然，我列出来的这些内容不一定都要写，可以根据实际情况调整。如果你觉得自己写得比较乱，也可以在启动 Goal 前先让 Codex 帮你整理。</p>
+<p>1、目标，也就是简要说明这次任务要做什么。</p>
+<p>2、状态记录与断点恢复。我一般会指定让 Codex 把进度保存到 <code>GOAL_STATUS.md</code> 里，并在文档中说明，每次启动后如果存在 status 文档，就应该先读里面的状态再继续执行，后续变动也都要记录进去。</p>
+<p>3、流程。比如先阅读项目的 PRD、Spec 和 Plan 文档理解项目作用，再按设定步骤分别进行后续工作。</p>
+<p>4、范围。如果你的项目里已经有文件，应该明确允许它改什么。另外最好再加一个限制，只能改 Workspace 里的文件，不要改外面的文件。当然，这还是建立在 AI 不出错的前提下。如果它出错，外面的文件也还是有可能被改到，所以最终还是要靠前面说的权限设置来兜底。</p>
+<p>5、限制。明确不要改什么，不要做什么操作。比如修复项目复杂 Bug 这类任务，可以要求它不要大幅修改整体架构。</p>
+<p>6、验收标准。也就是满足什么条件才算目标完成，可以停止。比如项目中的测试覆盖率达到多少，且所有测试都通过。</p>
+<p>7、异常处理。如果遇到特定的阻塞异常，无法继续，可以直接停止。如果遇到不阻塞、但需要人工干预的异常，可以让它记录下来，并说明为什么需要人工干预，但剩余任务还要继续跑。</p>
+<p>8、Token 预算。比如最多使用 100M Token 就停止，避免成本失控。</p>
+<h2 id="Goal-运行过程中的干预">Goal 运行过程中的干预</h2>
+<p>如果 Goal 启动后，你看它的运行过程，发现它理解得不对，或者你的 <code>GOAL.md</code> 写得不完整，可以直接去修改 <code>GOAL.md</code>。改完以后，在命令行里给它发一条消息，我改了 <code>GOAL.md</code>，你再看一遍。</p>
+<p>Codex 在运行完正在进行的一步后，就会重新查看你写的 <code>GOAL.md</code>。通常它会比较清楚地告诉你，它发现了哪些地方有变化，然后按照修改后的版本继续跑。</p>
+<p>如果运行过程中，你有一些不理解的地方，比如不知道它为什么这么执行，也可以直接跟它对话。如果它解释完你觉得没问题，那就不用管。如果它的解释让你发现你的 Goal 写得不对，那就按前面说的方式去修改。</p>
+<p>如果 Goal 已经跑起来了，但你需要临时暂停，或者要重启 Codex，比如为了调整权限设置，可以有两个思路。</p>
+<p>第一个思路是直接按 <code>Ctrl+C</code> 终止 Codex。之后你会看到它输出一句话，<code>To continue this session, run codex resume xxx</code>，最后面的一串十六进制字符就是会话的ID。后面按照这个命令继续运行就可以了。</p>
+<p><img data-src="./images/Codex%20goal%E6%A8%A1%E5%BC%8F-1778567482567.webp" alt=""></p>
+<p>第二个思路，是直接给 Codex 发一条消息，说我现在需要暂停，请你把状态保存到 Goal Status 文档里。然后 Codex 就会把当前任务最新状态保存到 status 文档中，并停止运行。</p>
+<p>但在它停止后，你会发现它马上又启动了，并且告诉你“我现在继续运行xxx”。这是因为 Goal 模式就是这么设计的。每次 Agent 自己停止后，系统都会审核目标有没有完成。如果没有完成，就会自动重新启动它。所以你需要在它刚启动的时候，再按一次 <code>Ctrl+C</code> 终止。</p>
+<p>等下一次再进入 Codex 后，还是输入 <code>/goal 参考 GOAL.md</code> 就可以了。</p>
+<h2 id="实际运行感受">实际运行感受</h2>
+<p>我实际在自己的项目上跑过几次 Goal 模式，总的来说效果还不错。</p>
+<p>其中有一次，是让它帮我优化项目中的提示词。我的项目本身是通过 AI 实现的工作流。我让它实际运行这个工作流，并优化提示词，同时给它定了几个目标，比如这个项目是否能按照 PRD 中的预期，产出比较可靠的结果。</p>
+<p>它确实做了一些优化，也修正了一些很明确的问题。比如两个 AI 步骤之间字段对不上，它帮我都修正了。但再往后，就没有更多优化了。总的来说，这种场景的问题在于，目标没办法非常清晰地量化。我只能在文档里写，让它判断这个结果是不是已经比较稳定、比较可靠了，但这不是一个足够明确的界限。</p>
+<p><strong>总的来说，Goal 模式更适合边界清晰的问题。</strong></p>
+<p>对于优化提示词，或者各种更模糊的事情，比如让界面更好看，由于 AI 本身的判断能力也是模糊的，所以很难量化，最后做出来的效果通常也没那么理想。</p>
+<p>但对于那些需求比较明确的场景，它就很合适。举个例子，假设我想让 Codex 帮我做 100 个经典小游戏，这种场景就很适合 Goal 模式。因为经典小游戏的玩法在网上都能查到，规则比较明确。再加上你又明确规定了要做 100 个，所以这个目标就很清晰。</p>
+<p>如果你直接给它发消息，让它做 100 个小游戏，不用 Goal 模式时，它可能做完一个以后就问你，要不要继续做下一个。但用了 Goal 模式以后，系统会自动审核它有没有真的做完 100 个，等全部做完了才会真正停下来。</p>
+<p>当然，还有一点要说的是，Goal 模式真的非常消耗 Token。按照我的实际体验，只要连续跑两个小时左右，就会触发 Plus 账号的五小时窗口，还会消耗掉 7d 窗口的大约六分之一额度。</p>
+<p>如果你想连续跑 10 小时，甚至更久的任务，至少要用官方 100 刀的 5x Codex 账号，最好是 200 刀的 20x 版本。整体看下来，成本还是有点高，不太适合轻度使用的用户。</p>
+<p>我实际运行，有一次就是在持续了13个小时后，把所有的 Token 窗口的额度都消耗完了，直接停止了。</p>
+<p>下面是我一次任务的实际成功执行结果截图。</p>
+<p><img data-src="./images/Codex%20goal%E6%A8%A1%E5%BC%8F-1778569973496.webp" alt=""></p>
+
+            
+
+<p>如果觉得文章有帮助，欢迎分享转发，也欢迎关注我的公众号“搬砖的小明”，及时获取更新</p>
+<p style="text-align: center;">
+<img src="/about/wechat-qrcode.jpg" alt="公众号：搬砖的小明">
+</p>
+
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/hexo-plugin-ai/" rel="bookmark">Hexo 博客无法复制 Markdown 本地图片？我写了一个插件</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/ai-boss-mode/" rel="bookmark">程序员的新工作：管理一群偷懒的 AI 员工</a></div>
+    </li>
+  </ul>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI%E7%BC%96%E7%A8%8B/" rel="tag"># AI编程</a>
+              <a href="/tags/Agent/" rel="tag"># Agent</a>
+              <a href="/tags/Codex/" rel="tag"># Codex</a>
+              <a href="/tags/Goal%E6%A8%A1%E5%BC%8F/" rel="tag"># Goal模式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/doubao-ime-mac/" rel="prev" title="豆包输入法 Mac 正式版出了，准确率更高了">
+      <i class="fa fa-chevron-left"></i> 豆包输入法 Mac 正式版出了，准确率更高了
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Codex"><span class="nav-number">1.</span> <span class="nav-text">安装 Codex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AF-Goal-%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">开启 Goal 模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">权限设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-Goal-%E7%9B%AE%E6%A0%87"><span class="nav-number">4.</span> <span class="nav-text">设置 Goal 目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Goal-%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%B9%B2%E9%A2%84"><span class="nav-number">5.</span> <span class="nav-text">Goal 运行过程中的干预</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E8%BF%90%E8%A1%8C%E6%84%9F%E5%8F%97"><span class="nav-number">6.</span> <span class="nav-text">实际运行感受</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview motion-element">
+  <h3 class="site-overview-title">小明的个人博客</h3>
+  <p class="site-description">90后理工男，前美团/微软程序员。记录生活、财富、技术与思考，用理工思维持续迭代对世界的理解。</p>
+  <div class="site-wechat-qrcode" style="text-align: center; margin-top: 15px;">
+    <p style="margin: 0; font-size: 13px; color: #999;">微信公众号</p>
+    <img src="/about/wechat-qrcode.jpg" alt="微信公众号二维码" style="width: 120px; height: 120px; max-width: 100%;">
+  </div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">307</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">178</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jzj1993" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jzj1993" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www.dappchaser.com/" title="http:&#x2F;&#x2F;www.dappchaser.com" rel="noopener" target="_blank">DAppChaser</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chenwenguan.com/" title="https:&#x2F;&#x2F;www.chenwenguan.com&#x2F;" rel="noopener" target="_blank">陈文管的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://yifeiyuan.me/" title="http:&#x2F;&#x2F;yifeiyuan.me&#x2F;" rel="noopener" target="_blank">程序亦非猿</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.trinea.cn/" title="https:&#x2F;&#x2F;www.trinea.cn&#x2F;" rel="noopener" target="_blank">Trinea</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.weshinekx.cn/" title="https:&#x2F;&#x2F;blog.weshinekx.cn&#x2F;" rel="noopener" target="_blank">Shinya</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小明</span>
+</div>
+  <div class="sitemap"><a href="/sitemap.xml" class="theme-link">站点地图</a>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.undefined</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : '3YlzwEecQlMdJPH9KEbFt6PX-gzGzoHsz',
+      appKey     : 'raIB2P7DewB4SAboVtpHakbh',
+      placeholder: "输入评论...",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '20' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
