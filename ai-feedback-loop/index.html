@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-16.png">
+  <link rel="mask-icon" href="/images/logo-128.png" color="#222">
+  <meta name="baidu-site-verification" content="codeva-Y0efqOZAOA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiaoming.io","root":"/","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="这两年，AI 大模型写代码越来越强，已经是很多人的共识了。但有一个奇怪的现象：为什么模型越来越先进，写代码的 Token 费用反而越来越高了？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI 大模型越来越先进，为什么写代码反而越来越贵？">
+<meta property="og:url" content="https://www.xiaoming.io/ai-feedback-loop/">
+<meta property="og:site_name" content="搬砖的小明">
+<meta property="og:description" content="这两年，AI 大模型写代码越来越强，已经是很多人的共识了。但有一个奇怪的现象：为什么模型越来越先进，写代码的 Token 费用反而越来越高了？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xiaoming.io/ai-feedback-loop/images/%E8%B4%9F%E5%8F%8D%E9%A6%88%E5%A6%82%E4%BD%95%E8%AE%A9AI%E6%9B%B4%E5%8F%AF%E9%9D%A0-1778756443875.webp">
+<meta property="og:image" content="https://www.xiaoming.io/ai-feedback-loop/images/0f2581a355f11bdb707a3399b624dc70.mp4">
+<meta property="og:image" content="https://www.xiaoming.io/ai-feedback-loop/images/%E8%B4%9F%E5%8F%8D%E9%A6%88%E5%A6%82%E4%BD%95%E8%AE%A9AI%E6%9B%B4%E5%8F%AF%E9%9D%A0%EF%BC%9F-1778738675141.webp">
+<meta property="og:image" content="https://www.xiaoming.io/ai-feedback-loop/images/%E8%B4%9F%E5%8F%8D%E9%A6%88%E5%A6%82%E4%BD%95%E8%AE%A9AI%E6%9B%B4%E5%8F%AF%E9%9D%A0%EF%BC%9F-1778739156958.webp">
+<meta property="article:published_time" content="2026-05-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-14T11:06:31.513Z">
+<meta property="article:author" content="小明">
+<meta property="article:tag" content="AI编程">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="可靠性">
+<meta property="article:tag" content="负反馈">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.xiaoming.io/ai-feedback-loop/images/%E8%B4%9F%E5%8F%8D%E9%A6%88%E5%A6%82%E4%BD%95%E8%AE%A9AI%E6%9B%B4%E5%8F%AF%E9%9D%A0-1778756443875.webp">
+
+<link rel="canonical" href="https://www.xiaoming.io/ai-feedback-loop/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>AI 大模型越来越先进，为什么写代码反而越来越贵？ | 搬砖的小明</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?01cb9081555fb604776b223fe01db45d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">搬砖的小明</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">308</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">180</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "AI 大模型越来越先进，为什么写代码反而越来越贵？",
+      "description": "这两年，AI 大模型写代码越来越强，已经是很多人的共识了。但有一个奇怪的现象：为什么模型越来越先进，写代码的 Token 费用反而越来越高了？",
+      "datePublished": "2026-05-13T16:00:00.000Z",
+      "dateModified": "2026-05-14T11:06:31.513Z",
+      "author": {
+        "@type": "Person",
+        "name": "小明"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "搬砖的小明",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "/images/logo-32.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.xiaoming.io/ai-feedback-loop/"
+      }
+    }
+    </script>
+    <link itemprop="mainEntityOfPage" href="https://www.xiaoming.io/ai-feedback-loop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="小明">
+      <meta itemprop="description" content="90后理工男，前美团/微软程序员。记录生活、财富、技术与思考，用理工思维持续迭代对世界的理解。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="搬砖的小明">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AI 大模型越来越先进，为什么写代码反而越来越贵？
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2026-05-14 00:00:00" itemprop="dateCreated datePublished" datetime="2026-05-14T00:00:00+08:00">2026-05-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/develop/" itemprop="url" rel="index"><span itemprop="name">开发技术</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/ai-feedback-loop/" class="post-meta-item leancloud_visitors" data-flag-title="AI 大模型越来越先进，为什么写代码反而越来越贵？" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/ai-feedback-loop/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/ai-feedback-loop/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><img data-src="./images/%E8%B4%9F%E5%8F%8D%E9%A6%88%E5%A6%82%E4%BD%95%E8%AE%A9AI%E6%9B%B4%E5%8F%AF%E9%9D%A0-1778756443875.webp" alt=""></p>
+<p>这两年，AI 大模型写代码越来越强，已经是很多人的共识了。但有一个奇怪的现象：<strong>为什么模型越来越先进，写代码的 Token 费用反而越来越高了？</strong></p>
+<h2 id="问题不在能不能写，而在靠不靠谱">问题不在能不能写，而在靠不靠谱</h2>
+<p>我看到一个视频，里面两个人因为 AI 写代码这件事，发生了比较激烈的争执。</p>
+<p><img data-src="images/0f2581a355f11bdb707a3399b624dc70.mp4" alt=""></p>
+<p>这和我最近的感受很像。</p>
+<p>自从有了 AI 大模型以后，很多项目正在以越来越快的速度诞生。但也有不少项目明显是用 AI 写出来的，给我的感觉是并不稳定。文档经常找不到，遇到问题也不知道该去哪里解决。</p>
+<p>例如 OpenClaw 这个项目就不算稳定，很多人吐槽它每次一升级，过去的配置就完全不能用了。这会让人觉得，这个东西不可靠，而且作者在开发时不够负责。</p>
+<p>前段时间还有一个热门话题，是 Node.js 核心团队成员提交了一个 1.9 万行代码修改的巨大 PR。据说这个 PR 用了 AI，大大提高了开发效率，目的是给 Node.js 新增虚拟文件系统（VFS）。</p>
+<p>这件事之所以引起巨大争议，是因为 Node.js 是软件世界非常核心的基础设施之一。这么大的 PR 会给 review 的人造成非常大的负担，也没有人敢轻易保证这些代码是可靠的。于是问题就来了，像这种基础设施，尤其是这么重要的基础设施项目，到底能不能用 AI 写代码？如果能用，又应该怎么用？</p>
+<p>我个人体感是，现在有些人用 AI 写代码的方式很不负责任。他们不太关心代码到底写成什么样，有 bug 也不管，也不认真测试，反正直接发出来，然后鼓吹自己一天写了几千几万行代码，又做了多少个项目。</p>
+<p>但项目质量并没有保证。</p>
+<p><strong>所以我觉得，至少在现阶段，AI 写完代码以后，最起码要粗略看一遍，而不是相信它能全自动搞定。</strong></p>
+<p>我还有一个和视频里类似的疑问。对于那些完全没有技术基础的人，如果他们通过 Vibe Coding 的方式做项目，真的能做出可靠的东西吗？会不会存在很多他们后来发现却解决不了的问题？更严重的是，会不会连问题本身都没有意识到？</p>
+<p>例如我在小红书上看到过一个案例，不知道是搞笑段子还是真实情况。有人做了几个网页，然后发出来的网址是 localhost。localhost 只有他自己的电脑能访问，别人根本打不开。</p>
+<p>对于不懂技术的人来说，他可能会觉得自己电脑上能访问，就等于别人也能访问。但实际上不是这样。</p>
+<p><img data-src="./images/%E8%B4%9F%E5%8F%8D%E9%A6%88%E5%A6%82%E4%BD%95%E8%AE%A9AI%E6%9B%B4%E5%8F%AF%E9%9D%A0%EF%BC%9F-1778738675141.webp" alt=""></p>
+<p>这些争议表面上看，是大家对 AI 写代码这件事态度不同。</p>
+<p>但往深一点看，真正的分歧其实不是 AI 能不能写代码，而是它写出来的东西到底能不能被信任。对个人玩具项目来说，能跑起来也许就够了。但对基础设施、团队协作、长期维护的项目来说，能跑只是起点，可靠才是重点。</p>
+<h2 id="为什么-AI-不能简单类比成编译器">为什么 AI 不能简单类比成编译器</h2>
+<p>也有人提出了不同看法。</p>
+<p>编译器刚诞生时，肯定也有人有过类似担忧。但到今天，已经没有人写代码还要去看编译器生成的汇编是什么样了。所以他们相信，AI 最后也会进化到这种程度。</p>
+<p>但我觉得，AI 和编译器在原理上有一个根本差别。</p>
+<p>AI 大模型本质上是一个按概率生成 Token 的系统，并不是一个很稳定的系统。即使你给同一个模型完全相同的上下文和提示词，多调用几次，它每次输出的结果也不太一样。</p>
+<p>编译器的本质，是把一种形式化输入转换成另一种形式化输出。只要输入一样、环境一样，输出通常就是确定的。</p>
+<p>但大模型不是这样。它不是在严格执行一套形式规则，而是在根据上下文做概率预测。**编译器追求的是确定性，模型擅长的是近似性。**这两者在体验上可以越来越像，但底层并不是一回事。</p>
+<p>那问题就来了。使用这么不稳定的东西，怎样才能让它稳定输出可靠的代码？再过几个月，或者几年后，AI 真的能像编译器一样，稳定可靠地写出代码，而完全不需要人工 review 吗？</p>
+<h2 id="负反馈如何让不稳定系统变可靠">负反馈如何让不稳定系统变可靠</h2>
+<p>想到这里，我突然想起大学模拟电路课上学过的运算放大器。</p>
+<p>当我们对着话筒说话，它会产生一个很微弱的电信号。但是想把这个电信号用喇叭或者庞大的音响播出来，就需要一个很强大的电信号去驱动，这就不得不使用放大器。</p>
+<p>放大器的基本组件一般是三极管。三极管可以把电路信号放大，但它本身的稳定性很差。它有热效应，只要持续工作，温度升高，放大倍率就会变化。而且还会受到电流等各种干扰，导致放大率持续波动。这样一来，原始信号就可能失真。</p>
+<p>那工程上是怎么解决这个问题的？</p>
+<p>答案就是负反馈。</p>
+<p>我们先把多个三极管串联起来，做成一个具有极高放大倍率的运算放大器，一般至少有几万倍。通常把这个放大倍数称为开环增益。</p>
+<p>再通过电阻，把输出反馈回输入的负极，形成负反馈。这样一来，电路的整体放大倍率可能只剩下 10 倍，这个放大倍数叫闭环增益。</p>
+<p>看起来是浪费了大量性能，但换来的结果是，它可以长期稳定地保持在 10 倍。运放电路的放大倍数取决于电阻阻值，和运放本身的倍率几乎没有关系。即使有热效应和电流干扰，也不太影响最终结果。</p>
+<p>也就是说，<strong>我们牺牲了很多性能，换来了系统强大的稳定性</strong>。</p>
+<p><img data-src="./images/%E8%B4%9F%E5%8F%8D%E9%A6%88%E5%A6%82%E4%BD%95%E8%AE%A9AI%E6%9B%B4%E5%8F%AF%E9%9D%A0%EF%BC%9F-1778739156958.webp" alt=""></p>
+<p>负反馈在工程里很常见，在很多领域都有实际应用。例如 PID 算法里也会用负反馈来实现系统稳定。无人机之所以能稳定悬停、稳定控制姿态，离不开 PID 算法。</p>
+<p>我后来再回头看，会觉得这和今天的 AI 特别像。模型本身的能力越来越强，就像开环增益越来越高。但如果没有反馈约束，它的输出能力越强，出错时的破坏力也越大。真正让系统能用的，往往不是一味把能力做大，而是想办法把它关进一个稳定的闭环里。</p>
+<p>从这个角度看，所谓让 AI 更可靠，其实不是让它永远不犯错，而是让它<strong>即使犯错，也能更快被发现、更快被纠正、更少把错误带到最终结果里</strong>。</p>
+<h2 id="为什么-AI-写代码越来越贵">为什么 AI 写代码越来越贵</h2>
+<p>再联想到大模型写代码的发展过程，我会觉得这条路其实已经很像了。</p>
+<p>我记得两年前刚开始用 ChatGPT 写代码时，最让我震惊的是，它居然能写出像那么回事的代码片段。复制粘贴过去，有时候还真能跑起来。</p>
+<p>但那时候也经常会遇到语法错误，甚至代码根本编译不过。这其实很好理解，毕竟 Token 是按概率生成的。既然是概率输出，就完全可能出现一些不符合语法格式的结果。</p>
+<p>当时 ChatGPT 的形态就是一个聊天软件，只能处理一些比较短的代码片段，代码的复制粘贴也都要人工进行。那时 ChatGPT 聊天基本还是免费的，也很快就能返回结果。</p>
+<p>到了去年的 7 月份，我已经开始用 Cursor 写代码了。那时候已经发展到 Agent 模式，也就是大模型可以自己读写文件，自己做多步分析，最后把代码输出出来。这里面的每一步，其实都需要多次大模型调用。</p>
+<p>而我用 Cursor 的时候，它基本已经不太会出现语法错误了。原因是它写完代码以后会主动运行语法检查，还可以写测试、跑测试，发现问题再回去修改。</p>
+<p>在那个阶段，Cursor 算是当时最先进的工具之一。它的形态是在 VS Code 之类的代码编辑器右边增加一个聊天窗口，并且在聊天结束后可以查看到底改了什么。</p>
+<p>你给 AI 发一句话，它把任务做完，整个过程可能要几分钟，还会消耗几百万 Token。那时候我也已经开始为 Cursor 付费了。</p>
+<p>到了今年，又开始出现 Harness 编程、Spec Driven 之类的思路。</p>
+<p>现在的流程通常是这样的。每次大模型输出一些内容，Agent 会先做一些处理和思考，然后才写入文件。在使用一些技能和流程约束以后，还可以要求它先给代码写测试，再去实现。写到文件里以后，它会跑测试等各种工具检查。如果发现有问题，就会反复修改直到问题解决。最后到我这里，我再给它人工反馈，它再改，直到得到我想要的结果。</p>
+<p>到了现在这个阶段，几乎大部分写代码的 Agent 工具都已经发展成了以 Agent 为主的界面。你可以和 AI 展开很多个对话，界面的主体就是对话窗，而具体的代码改动只是一个侧边栏，简单看一下就行了。</p>
+<p>我算是比较重度的用户了，现在写代码一天可能要花 1 亿到 2 亿 Token。为了大模型持续付费，现在也已经是很普遍的事情，不少程序员每个月都要花几百甚至上千块。</p>
+<p>这里就有一个很有意思的问题。</p>
+<p>如果回头看这两年的工具演化，会发现一个很明显的趋势：<strong>AI 并不是在变成一个更便宜的代码生成器，而是在变成一个更昂贵的验证系统。</strong></p>
+<p>尽管大模型的准确率越来越高，显卡性能也越来越强，但我们用大模型写代码花掉的 Token 和总支出，反而越来越多。</p>
+<p>我的理解是，这本质上也像一种负反馈机制。</p>
+<p>本来大模型可以直接把代码吐出来，但现在我们要对它做测试，要让它跑 Harness 闭环，要让它自己完成验证，还要人工核验。甚至有些人会做多 Agent，让专门的 Agent 去审查代码、提出反馈。</p>
+<p>这当然会让输出代码的成本大幅提高，但也换来了可靠性的增加。</p>
+<p>也就是说，真正贵的，可能不是生成代码这一步，而是为了让这段代码变得可交付、可维护、可上线，我们在外围叠加的那整套确认机制。代码可以很便宜地生成出来，但可靠性从来都不便宜。</p>
+<p><strong>如果继续沿着这个思路走下去，也许在不远的将来，我们真的可以让 AI 持续稳定地输出非常可靠的代码。</strong></p>
+<p>到那个时候，人可能彻底不需要再看具体代码了，只需要看文档和结果是否符合预期就够了。</p>
+<p>但代价也很明显，Token 的消耗量大概率会比现在高很多，甚至可能成倍增加。到那时，能不能拿到便宜的 Token，会成为一个非常重要的事情。</p>
+<h2 id="更像人类，也更昂贵">更像人类，也更昂贵</h2>
+<p>我还和人讨论过另一个问题。</p>
+<p>现在的大模型普遍已经能理解图片里的大致内容。如果让它做一个前端界面，它也可以通过截图去理解界面里有什么元素，哪些元素实现有问题，哪些 UI 交互可能有问题。</p>
+<p>但它背后的原理，要么是隔一段时间截一张图，分析这张图，再尝试操作一下。要么结合 Accessibility 接口分析界面元素。如果是网页，也可以直接调用每个 DOM 元素的接口。现在很多 Agent 的 Computer Use 模式，大体上也是类似的思路。</p>
+<p>我观察过豆包 App 里的视频通话功能，它也是隔一段时间截一张图来分析。所以有时会发现，你问它一个问题，它回答的还是几秒之前的画面内容。</p>
+<p>以目前的技术水平，AI 在软件开发，特别是前端开发方面，只能完成一部分工作。当然这也足以大大提高生产效率。但如果想让它达到接近人类的水平，还有很长的路要走。</p>
+<p>第一个问题是，AI 现在对图片的理解还没有那么好。</p>
+<p>有个前端开发朋友跟我聊过他现在面临的问题。设计师给了他一张图，里面不是常规的卡片式界面布局，而是一个促销 Banner，包含一些图片元素和折扣文字。</p>
+<p>但 AI 做出来的效果明显有偏差。它实现的文字元素，尺寸和位置可能没能准确和背景图片对齐，所以看起来会很明显有 Bug，或者就是很丑。但 AI 自己并没有很好的审美，它并不知道这些文字到底该和背景图里的哪些元素精确对齐。</p>
+<p>另一个问题是对连续动态画面的理解。</p>
+<p>如果界面是静态的，AI 或许还能通过截图分析出哪些元素不对，再把它摆正。但如果界面需要更细致的动效，特别是游戏画面，难度就会瞬间上来。AI 不能靠隔很长时间截一张图的方式去理解，而是要持续截图，判断动效是不是连贯。</p>
+<p>它最终要处理的就不是单张图片，而是一个视频流。并且在视频理解的同时，它还要操作界面，才能知道这个功能是否流畅。</p>
+<p>先不说算力，光是把视频流实时传到远程大模型服务器上，按现在很多人的家用网络速度，就可能出现明显延迟和卡顿。很多人用 VNC 远程操作 Linux 电脑时，就已经会因为网络速度限制而觉得不流畅。</p>
+<p>再说算力，这种情况需要的算力很可能是爆炸式增长的。它需要消耗的性能和 Token，可能会大到难以想象。仅靠现在这条技术路线慢慢进步，大概还得很久。也许要等模拟计算机、量子计算机之类更底层的技术突破才能做到。</p>
+<h2 id="现实世界更需要高密度反馈">现实世界更需要高密度反馈</h2>
+<p>这类问题不只出现在软件开发里。无人驾驶、机器人、实时视频理解，本质上都要求模型持续接收环境反馈，再持续修正自己的判断。</p>
+<p>这些场景都要求 AI 持续分析当前画面，并实时做出判断，所以同样会面临类似的问题。很多现有方案实际上会依赖离线模型，因为数据量实在太大了。如果完全靠在线模型，网络速度和延迟往往跟不上。</p>
+<p>即使是复杂的在线模型，对图片的分析和理解也还有不少问题。而离线模型受限于本地算力和模型规模，很多任务只会更难。特别是机器人场景，想让它做一些精细化操作，那就太困难了。</p>
+<p>一旦任务从生成一次答案，变成持续盯住现实世界并不断纠偏，成本就会急剧上升。所以从这个角度看，AI 想真正替代很多人类工作，难点未必只是模型够不够聪明，而是我们能不能承担这么高密度的反馈成本。</p>
+<p>所以总结来说，AI 想要深入到更多真实场景里，进一步提升人类的工作效率，还是任重而道远。</p>
+
+            
+
+<p>如果觉得文章有帮助，欢迎分享转发，也欢迎关注我的公众号“搬砖的小明”，及时获取更新</p>
+<p style="text-align: center;">
+<img src="/about/wechat-qrcode.jpg" alt="公众号：搬砖的小明">
+</p>
+
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/codex-goal-mode/" rel="bookmark">我用 Codex Goal 模式连续跑了 13 小时，聊聊真实体验</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/hexo-plugin-ai/" rel="bookmark">Hexo 博客无法复制 Markdown 本地图片？我写了一个插件</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/ai-boss-mode/" rel="bookmark">程序员的新工作：管理一群偷懒的 AI 员工</a></div>
+    </li>
+  </ul>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AI%E7%BC%96%E7%A8%8B/" rel="tag"># AI编程</a>
+              <a href="/tags/Agent/" rel="tag"># Agent</a>
+              <a href="/tags/%E8%B4%9F%E5%8F%8D%E9%A6%88/" rel="tag"># 负反馈</a>
+              <a href="/tags/%E5%8F%AF%E9%9D%A0%E6%80%A7/" rel="tag"># 可靠性</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/codex-goal-mode/" rel="prev" title="我用 Codex Goal 模式连续跑了 13 小时，聊聊真实体验">
+      <i class="fa fa-chevron-left"></i> 我用 Codex Goal 模式连续跑了 13 小时，聊聊真实体验
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%8D%E5%9C%A8%E8%83%BD%E4%B8%8D%E8%83%BD%E5%86%99%EF%BC%8C%E8%80%8C%E5%9C%A8%E9%9D%A0%E4%B8%8D%E9%9D%A0%E8%B0%B1"><span class="nav-number">1.</span> <span class="nav-text">问题不在能不能写，而在靠不靠谱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-AI-%E4%B8%8D%E8%83%BD%E7%AE%80%E5%8D%95%E7%B1%BB%E6%AF%94%E6%88%90%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">为什么 AI 不能简单类比成编译器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9F%E5%8F%8D%E9%A6%88%E5%A6%82%E4%BD%95%E8%AE%A9%E4%B8%8D%E7%A8%B3%E5%AE%9A%E7%B3%BB%E7%BB%9F%E5%8F%98%E5%8F%AF%E9%9D%A0"><span class="nav-number">3.</span> <span class="nav-text">负反馈如何让不稳定系统变可靠</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-AI-%E5%86%99%E4%BB%A3%E7%A0%81%E8%B6%8A%E6%9D%A5%E8%B6%8A%E8%B4%B5"><span class="nav-number">4.</span> <span class="nav-text">为什么 AI 写代码越来越贵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%83%8F%E4%BA%BA%E7%B1%BB%EF%BC%8C%E4%B9%9F%E6%9B%B4%E6%98%82%E8%B4%B5"><span class="nav-number">5.</span> <span class="nav-text">更像人类，也更昂贵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E5%AE%9E%E4%B8%96%E7%95%8C%E6%9B%B4%E9%9C%80%E8%A6%81%E9%AB%98%E5%AF%86%E5%BA%A6%E5%8F%8D%E9%A6%88"><span class="nav-number">6.</span> <span class="nav-text">现实世界更需要高密度反馈</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview motion-element">
+  <h3 class="site-overview-title">小明的个人博客</h3>
+  <p class="site-description">90后理工男，前美团/微软程序员。记录生活、财富、技术与思考，用理工思维持续迭代对世界的理解。</p>
+  <div class="site-wechat-qrcode" style="text-align: center; margin-top: 15px;">
+    <p style="margin: 0; font-size: 13px; color: #999;">微信公众号</p>
+    <img src="/about/wechat-qrcode.jpg" alt="微信公众号二维码" style="width: 120px; height: 120px; max-width: 100%;">
+  </div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">308</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">180</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jzj1993" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jzj1993" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www.dappchaser.com/" title="http:&#x2F;&#x2F;www.dappchaser.com" rel="noopener" target="_blank">DAppChaser</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chenwenguan.com/" title="https:&#x2F;&#x2F;www.chenwenguan.com&#x2F;" rel="noopener" target="_blank">陈文管的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://yifeiyuan.me/" title="http:&#x2F;&#x2F;yifeiyuan.me&#x2F;" rel="noopener" target="_blank">程序亦非猿</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.trinea.cn/" title="https:&#x2F;&#x2F;www.trinea.cn&#x2F;" rel="noopener" target="_blank">Trinea</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.weshinekx.cn/" title="https:&#x2F;&#x2F;blog.weshinekx.cn&#x2F;" rel="noopener" target="_blank">Shinya</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小明</span>
+</div>
+  <div class="sitemap"><a href="/sitemap.xml" class="theme-link">站点地图</a>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.undefined</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : '3YlzwEecQlMdJPH9KEbFt6PX-gzGzoHsz',
+      appKey     : 'raIB2P7DewB4SAboVtpHakbh',
+      placeholder: "输入评论...",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '20' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
