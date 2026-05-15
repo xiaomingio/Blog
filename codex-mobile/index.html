@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-16.png">
+  <link rel="mask-icon" href="/images/logo-128.png" color="#222">
+  <meta name="baidu-site-verification" content="codeva-Y0efqOZAOA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.xiaoming.io","root":"/","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="以前手机上用 Codex 很别扭 在用 Codex 写代码时，经常会遇到需要 Approve，或者 Agent 长时间运行、想看结果的情况。但有时候人不在电脑前，手机上又没办法操作。虽然现在市面上也有一些工具可以实现类似的效果，但都不是特别方便。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codex 官方手机客户端终于来了">
+<meta property="og:url" content="https://www.xiaoming.io/codex-mobile/">
+<meta property="og:site_name" content="搬砖的小明">
+<meta property="og:description" content="以前手机上用 Codex 很别扭 在用 Codex 写代码时，经常会遇到需要 Approve，或者 Agent 长时间运行、想看结果的情况。但有时候人不在电脑前，手机上又没办法操作。虽然现在市面上也有一些工具可以实现类似的效果，但都不是特别方便。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.xiaoming.io/codex-mobile/images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778803120775.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-mobile/images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778803159403.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-mobile/images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778803178882.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-mobile/images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804212732.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-mobile/images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804243477.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-mobile/images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804337533.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-mobile/images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778803282074.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-mobile/images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804439070.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-mobile/images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804691951.webp">
+<meta property="og:image" content="https://www.xiaoming.io/codex-mobile/images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804137736.webp">
+<meta property="article:published_time" content="2026-05-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-15T00:43:33.203Z">
+<meta property="article:author" content="小明">
+<meta property="article:tag" content="AI编程">
+<meta property="article:tag" content="ChatGPT">
+<meta property="article:tag" content="Codex">
+<meta property="article:tag" content="效率工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.xiaoming.io/codex-mobile/images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778803120775.webp">
+
+<link rel="canonical" href="https://www.xiaoming.io/codex-mobile/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Codex 官方手机客户端终于来了 | 搬砖的小明</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?01cb9081555fb604776b223fe01db45d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">搬砖的小明</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">309</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">180</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Codex 官方手机客户端终于来了",
+      "description": "以前手机上用 Codex 很别扭 在用 Codex 写代码时，经常会遇到需要 Approve，或者 Agent 长时间运行、想看结果的情况。但有时候人不在电脑前，手机上又没办法操作。虽然现在市面上也有一些工具可以实现类似的效果，但都不是特别方便。",
+      "datePublished": "2026-05-14T16:00:00.000Z",
+      "dateModified": "2026-05-15T00:43:33.203Z",
+      "author": {
+        "@type": "Person",
+        "name": "小明"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "搬砖的小明",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "/images/logo-32.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.xiaoming.io/codex-mobile/"
+      }
+    }
+    </script>
+    <link itemprop="mainEntityOfPage" href="https://www.xiaoming.io/codex-mobile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="小明">
+      <meta itemprop="description" content="90后理工男，前美团/微软程序员。记录生活、财富、技术与思考，用理工思维持续迭代对世界的理解。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="搬砖的小明">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Codex 官方手机客户端终于来了
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2026-05-15 00:00:00" itemprop="dateCreated datePublished" datetime="2026-05-15T00:00:00+08:00">2026-05-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/develop/" itemprop="url" rel="index"><span itemprop="name">开发技术</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/codex-mobile/" class="post-meta-item leancloud_visitors" data-flag-title="Codex 官方手机客户端终于来了" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/codex-mobile/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/codex-mobile/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="以前手机上用-Codex-很别扭">以前手机上用 Codex 很别扭</h2>
+<p>在用 Codex 写代码时，经常会遇到需要 Approve，或者 Agent 长时间运行、想看结果的情况。但有时候人不在电脑前，手机上又没办法操作。虽然现在市面上也有一些工具可以实现类似的效果，但都不是特别方便。</p>
+<p>比如 HappyCode，我实际测试了一下，Claude 的体验会比较好，可以在手机和电脑上无缝切换。但 Codex 的体验就没那么好了。如果想在手机上操作，电脑上就只能看，不能同时操作，而且电脑上只能用命令行版本。虽然它还有一个网页模式，但我实际测试了几次，都没成功连上。</p>
+<p>而 Claude 已经推出了官方手机版 App，但 Codex 一直没有推出来。</p>
+<p>今天我发现 Codex 已经能在手机上用了。它其实不是独立 App，而是直接集成在 ChatGPT App 里。</p>
+<h2 id="实际接入很简单">实际接入很简单</h2>
+<p>我用自己的免费版 ChatGPT 账号测试了一下，还是挺好用的。</p>
+<p>首先要安装或升级到最新版 Codex Mac 版，手机上的 ChatGPT App 也要升级到最新版本。Windows暂时还不支持。</p>
+<p>Mac 版安装好之后，就会看到这个界面。在 Mac 上登录 Codex 官方账号。</p>
+<p>如果你之前设置过 API Key，需要把环境变量以及配置文件 <code>~/.codex/config.toml</code> 里的 API Key 清掉。不然 Codex 还是会优先调用 API Key，然后发现这个 Key 和你当前登录的账号对不上，最后调用失败。</p>
+<p><img data-src="./images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778803120775.webp" alt=""></p>
+<p><img data-src="./images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778803159403.webp" alt=""></p>
+<p>点击允许之后，会出现一个二维码。实际上这个二维码也不用扫，因为只要手机上登录的是同一个账号，就会直接连上。</p>
+<p><img data-src="./images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778803178882.webp" alt=""></p>
+<p>在手机上登录同一个账号，然后在菜单里可以看到 Codex 这个选项，点开。</p>
+<p><img data-src="./images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804212732.webp" alt=""></p>
+<p>它会打开一个网页，点击授权。</p>
+<p><img data-src="./images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804243477.webp" alt=""></p>
+<p>手机上就能看到电脑上之前的项目了。</p>
+<p><img data-src="./images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804337533.webp" alt=""></p>
+<p>电脑上也会出现已连接的界面。</p>
+<p><img data-src="./images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778803282074.webp" alt=""></p>
+<h2 id="敏感操作也能在手机上确认">敏感操作也能在手机上确认</h2>
+<p>我实际做了一个测试，直接在手机上发消息，让它帮我把电脑桌面上的一个测试文件夹删掉。删除是一个敏感操作，这个测试比较有代表性。</p>
+<p>这时候电脑上会弹出一个 Mac 系统自带的“Codex.app 想访问桌面文件夹中的文件”确认对话框。如果我不点，它就没办法继续。不过还好，这是 Mac 系统的权限控制，只要第一次点过，后面就不需要重复点了。我点了确认。</p>
+<p>Codex 在调用了 careful 技能之后，会让我确认是否要删除这个文件夹。而且在电脑和手机上都能看到这个确认弹窗。</p>
+<p><img data-src="./images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804439070.webp" alt=""></p>
+<p>我在手机上点了确认，很快它就把这个测试文件夹删掉了，并且按 Codex 一贯的操作，把分析过程那些记录都折叠起来了。</p>
+<p><img data-src="./images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804691951.webp" alt=""></p>
+<p>在电脑上也能看到，这个文件夹确实被删掉了。</p>
+<p><img data-src="./images/Codex%E5%AE%98%E6%96%B9%E6%89%8B%E6%9C%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%88%E4%BA%8E%E6%9D%A5%E4%BA%86-1778804137736.webp" alt=""></p>
+<p>整个体验很丝滑，但是缺点是必须登录 Codex 官方账号。像我们平时用中转站配置 API Key 的情况，我目前测试是没办法用的，因为手机上必须登录ChatGPT账号，才能看到 Codex 入口。不知道后续会不会有解决办法。</p>
+
+            
+
+<p>如果觉得文章有帮助，欢迎分享转发，也欢迎关注我的公众号“搬砖的小明”，及时获取更新</p>
+<p style="text-align: center;">
+<img src="/about/wechat-qrcode.jpg" alt="公众号：搬砖的小明">
+</p>
+
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/codex-goal-mode/" rel="bookmark">我用 Codex Goal 模式连续跑了 13 小时，聊聊真实体验</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/openclaw-why-and-future/" rel="bookmark">为什么是 OpenClaw？AI对软件行业的影响和未来趋势</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/openclaw-practice/" rel="bookmark">使用OpenClaw一周后，我给自己建了个团队</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/chatgpt-images-2/" rel="bookmark">ChatGPT Images 2.0 发布：从“会画图”到“会思考”的生成时代</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/ai-feedback-loop/" rel="bookmark">AI 越来越先进，为什么写代码却越来越贵？</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/hexo-plugin-ai/" rel="bookmark">Hexo 博客无法复制 Markdown 本地图片？我写了一个插件</a></div>
+    </li>
+  </ul>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" rel="tag"># 效率工具</a>
+              <a href="/tags/ChatGPT/" rel="tag"># ChatGPT</a>
+              <a href="/tags/AI%E7%BC%96%E7%A8%8B/" rel="tag"># AI编程</a>
+              <a href="/tags/Codex/" rel="tag"># Codex</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/ai-feedback-loop/" rel="prev" title="AI 越来越先进，为什么写代码却越来越贵？">
+      <i class="fa fa-chevron-left"></i> AI 越来越先进，为什么写代码却越来越贵？
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E5%89%8D%E6%89%8B%E6%9C%BA%E4%B8%8A%E7%94%A8-Codex-%E5%BE%88%E5%88%AB%E6%89%AD"><span class="nav-number">1.</span> <span class="nav-text">以前手机上用 Codex 很别扭</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%8E%A5%E5%85%A5%E5%BE%88%E7%AE%80%E5%8D%95"><span class="nav-number">2.</span> <span class="nav-text">实际接入很简单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%8F%E6%84%9F%E6%93%8D%E4%BD%9C%E4%B9%9F%E8%83%BD%E5%9C%A8%E6%89%8B%E6%9C%BA%E4%B8%8A%E7%A1%AE%E8%AE%A4"><span class="nav-number">3.</span> <span class="nav-text">敏感操作也能在手机上确认</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview motion-element">
+  <h3 class="site-overview-title">小明的个人博客</h3>
+  <p class="site-description">90后理工男，前美团/微软程序员。记录生活、财富、技术与思考，用理工思维持续迭代对世界的理解。</p>
+  <div class="site-wechat-qrcode" style="text-align: center; margin-top: 15px;">
+    <p style="margin: 0; font-size: 13px; color: #999;">微信公众号</p>
+    <img src="/about/wechat-qrcode.jpg" alt="微信公众号二维码" style="width: 120px; height: 120px; max-width: 100%;">
+  </div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">309</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">180</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jzj1993" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jzj1993" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www.dappchaser.com/" title="http:&#x2F;&#x2F;www.dappchaser.com" rel="noopener" target="_blank">DAppChaser</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chenwenguan.com/" title="https:&#x2F;&#x2F;www.chenwenguan.com&#x2F;" rel="noopener" target="_blank">陈文管的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://yifeiyuan.me/" title="http:&#x2F;&#x2F;yifeiyuan.me&#x2F;" rel="noopener" target="_blank">程序亦非猿</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.trinea.cn/" title="https:&#x2F;&#x2F;www.trinea.cn&#x2F;" rel="noopener" target="_blank">Trinea</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.weshinekx.cn/" title="https:&#x2F;&#x2F;blog.weshinekx.cn&#x2F;" rel="noopener" target="_blank">Shinya</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小明</span>
+</div>
+  <div class="sitemap"><a href="/sitemap.xml" class="theme-link">站点地图</a>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.undefined</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : true,
+      notify     : true,
+      appId      : '3YlzwEecQlMdJPH9KEbFt6PX-gzGzoHsz',
+      appKey     : 'raIB2P7DewB4SAboVtpHakbh',
+      placeholder: "输入评论...",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '20' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
