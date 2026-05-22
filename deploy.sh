@@ -100,5 +100,6 @@ else
 
   echo
   echo "## Deploy complete"
+  echo
   echo "See github pages deployment in https://github.com/Xiaoming-Team/Blog/deployments"
 fi
