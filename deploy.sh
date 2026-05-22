@@ -38,7 +38,8 @@ echo "MODE = $MODE, FULL = $FULL, TEST = $TEST"
 
 # generate blog to pulic dir
 echo
-echo "Generate blog to public dir"
+echo "## Generate blog to public dir"
+echo
 if [ "$FULL" = true ]; then
   hexo clean
 fi
@@ -48,7 +49,8 @@ hexo generate
 # fetch git data from remote repo to remote directory
 # this directory will be reused so we only need to fetch changed data
 echo
-echo "Fetch git data from remote"
+echo "## Fetch git data from remote"
+echo
 if [ ! -d "remote" ]; then
   git clone --branch gh-pages "git@github.com:Xiaoming-Team/Blog.git" remote
 fi
@@ -60,7 +62,7 @@ popd > /dev/null
 
 # link .git from remote to public, and let git to track public directory
 echo
-echo "Track public directory with git"
+echo "## Track public directory with git"
 [ ! -e `pwd`/public/.git ] && ln -s `pwd`/remote/.git `pwd`/public/.git
 
 
@@ -76,12 +78,13 @@ fi
 # reset remote diretory to lasted commit
 if [ "$TEST" = true ]; then
   echo
-  echo 'Test mode, check the status in public directory'
+  echo '## Test mode, check the status in public directory'
   echo "MESSAGE: '$MESSAGE'"
   echo "DEPLOY_MESSAGE: '$DEPLOY_MESSAGE'"
 else
   echo
-  echo "Incremental deploy with git"
+  echo "## Incremental deploy with git"
+  echo
   pushd public > /dev/null
   git add .
   git commit -m "$DEPLOY_MESSAGE"
@@ -89,8 +92,13 @@ else
   popd > /dev/null
 
   echo
-  echo "Set remote directory to lastest"
+  echo "## Set remote directory to lastest"
+  echo
   pushd remote > /dev/null
   git reset --hard HEAD
   popd > /dev/null
+
+  echo
+  echo "## Deploy complete"
+  echo "See github pages deployment in https://github.com/Xiaoming-Team/Blog/deployments"
 fi
