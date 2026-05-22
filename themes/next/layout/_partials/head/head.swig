@@ -1,3 +1,7 @@
+<!--
+文件说明: 输出站点 head 区域的公共资源与验证信息，包括图标、站点验证与广告脚本。
+对应文档: Hexo NexT 主题头部模板
+-->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="{{ theme.android_chrome_color }}">
@@ -40,6 +44,7 @@
 {%- endif %}
 {%- if theme.google_adsense_account %}
   <meta name="google-adsense-account" content="{{ theme.google_adsense_account }}">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ theme.google_adsense_account }}" crossorigin="anonymous"></script>
 {%- endif %}
 
 <link rel="stylesheet" href="{{ url_for(theme.css) }}/main.css">
