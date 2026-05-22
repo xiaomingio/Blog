@@ -105,6 +105,9 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: next
 
+theme_config:
+  google_adsense_account: ca-pub-3039212054662124
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:

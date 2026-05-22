@@ -38,6 +38,9 @@
 {%- if theme.baidu_site_verification %}
   <meta name="baidu-site-verification" content="{{ theme.baidu_site_verification }}">
 {%- endif %}
+{%- if theme.google_adsense_account %}
+  <meta name="google-adsense-account" content="{{ theme.google_adsense_account }}">
+{%- endif %}
 
 <link rel="stylesheet" href="{{ url_for(theme.css) }}/main.css">
 
