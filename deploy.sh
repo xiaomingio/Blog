@@ -52,7 +52,7 @@ echo
 echo "## Fetch git data from remote"
 echo
 if [ ! -d "remote" ]; then
-  git clone --branch gh-pages "git@github.com:Xiaoming-Team/Blog.git" remote
+  git clone --branch gh-pages "git@github.com:xiaomingio/blog-pages.git" remote
 fi
 pushd remote > /dev/null
 git fetch origin gh-pages
@@ -100,6 +100,4 @@ else
 
   echo
   echo "## Deploy complete"
-  echo
-  echo "See github pages deployment in https://github.com/Xiaoming-Team/Blog/deployments"
 fi
