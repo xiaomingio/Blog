@@ -52,11 +52,11 @@ echo
 echo "## Fetch git data from remote"
 echo
 if [ ! -d "remote" ]; then
-  git clone --branch gh-pages "git@github.com:xiaomingio/blog-pages.git" remote
+  git clone --branch main "git@github.com:xiaomingio/blog-pages.git" remote
 fi
 pushd remote > /dev/null
-git fetch origin gh-pages
-git reset --hard origin/gh-pages
+git fetch origin main
+git reset --hard origin/main
 popd > /dev/null
 
 
@@ -88,7 +88,7 @@ else
   pushd public > /dev/null
   git add .
   git commit -m "$DEPLOY_MESSAGE"
-  git push origin HEAD:gh-pages
+  git push origin HEAD:main
   popd > /dev/null
 
   echo
