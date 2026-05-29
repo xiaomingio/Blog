@@ -46,7 +46,7 @@
   <meta name="google-adsense-account" content="{{ theme.google_adsense_account }}">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ theme.google_adsense_account }}" crossorigin="anonymous"></script>
 {%- endif %}
-<script defer src="https://cloud.umami.is/script.js" data-website-id="8df918ec-5b83-4d80-ab44-7480ce527e6d"></script>
+<script defer src="https://stats.xiaoming.io/script.js" data-website-id="d2e842dc-d3af-415c-98c8-16399482f767"></script>
 
 <link rel="stylesheet" href="{{ url_for(theme.css) }}/main.css">
 
